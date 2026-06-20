@@ -493,7 +493,7 @@ NOTIFY_FIELD_LABELS = {
     "registration_link":"קישור הרשמה",
 }
 
-PUBLIC_URL = "https://shiur-patuach.netlify.app"
+PUBLIC_URL = "https://qhjmdrmfvdf7buqlszpc32.streamlit.app"
 
 def generate_whatsapp_text(l):
     topic    = l.get('topic', '')
@@ -571,7 +571,7 @@ def generate_general_email(lesson, to_whom="lesson"):
     ]
     return subject, "\n".join(body_parts)
 
-def generate_update_email(lesson, schedule_url="https://shiur-patuach.netlify.app"):
+def generate_update_email(lesson, schedule_url="https://qhjmdrmfvdf7buqlszpc32.streamlit.app"):
     title = lesson["topic"]
     if lesson.get("subtitle","").strip():
         title = f"{title} – {lesson['subtitle']}"
