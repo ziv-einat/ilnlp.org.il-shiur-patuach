@@ -1,0 +1,19 @@
+# Sensitive data — never commit to a public repo
+admin_config.json
+subscribers.json
+activity_log.json
+
+# Auto-generated backups
+backups/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Streamlit secrets (for cloud deployment)
+.streamlit/secrets.toml
+
+# OS files
+.DS_Store
+Thumbs.db
