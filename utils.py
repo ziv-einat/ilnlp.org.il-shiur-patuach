@@ -3,12 +3,30 @@ import json, os, uuid, csv, io, re, secrets
 from datetime import datetime, timedelta
 from urllib.parse import quote
 
-BASE        = os.path.dirname(os.path.abspath(__file__))
-DATA_FILE   = os.path.join(BASE, "lessons_data.json")
-CONFIG_FILE = os.path.join(BASE, "admin_config.json")
-LOG_FILE    = os.path.join(BASE, "activity_log.json")
-BACKUP_DIR  = os.path.join(BASE, "backups")
+BASE          = os.path.dirname(os.path.abspath(__file__))
+DATA_FILE     = os.path.join(BASE, "lessons_data.json")
+CONFIG_FILE   = os.path.join(BASE, "admin_config.json")
+SETTINGS_FILE = os.path.join(BASE, "settings.json")
+LOG_FILE      = os.path.join(BASE, "activity_log.json")
+BACKUP_DIR    = os.path.join(BASE, "backups")
 os.makedirs(BACKUP_DIR, exist_ok=True)
+
+SETTINGS_KEYS = ["subscription_enabled", "display_from_lesson", "display_to_lesson"]
+
+def _load_settings_file():
+    try:
+        with open(SETTINGS_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def _save_settings_file(config):
+    try:
+        settings = {k: config.get(k) for k in SETTINGS_KEYS}
+        with open(SETTINGS_FILE, "w", encoding="utf-8") as f:
+            json.dump(settings, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
 
 HEBREW_MONTHS = {1:"ינואר",2:"פברואר",3:"מרץ",4:"אפריל",5:"מאי",6:"יוני",
                  7:"יולי",8:"אוגוסט",9:"ספטמבר",10:"אוקטובר",11:"נובמבר",12:"דצמבר"}
@@ -251,6 +269,7 @@ def load_config():
         if secret_cfg:
             config = json.loads(secret_cfg)
             config, _ = _migrate_config(config)
+            config.update(_load_settings_file())
             return config
     except Exception:
         pass
@@ -261,13 +280,18 @@ def load_config():
     except Exception:
         config = {"admins": [], "max_attempts": 5, "lockout_minutes": 15}
     config, changed = _migrate_config(config)
+    config.update(_load_settings_file())
     if changed:
         save_config(config)
     return config
 
 def save_config(config):
-    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
-        json.dump(config, f, ensure_ascii=False, indent=2)
+    _save_settings_file(config)
+    try:
+        with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+            json.dump(config, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
 
 def get_all_admins():
     return load_config().get("admins", [])
