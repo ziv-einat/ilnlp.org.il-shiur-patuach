@@ -33,6 +33,8 @@ st.markdown("""
 html, body, [class*="css"] { direction: rtl; }
 [data-testid="stSidebarNavItems"] { display: none !important; }
 [data-testid="stSidebar"] { display: none !important; }
+header[data-testid="stHeader"] { display: none !important; }
+#MainMenu { display: none !important; }
 .block-container { max-width: 740px; padding-top: 1.5rem; }
 
 .page-header {
