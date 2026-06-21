@@ -35,6 +35,8 @@ html, body, [class*="css"] { direction: rtl; }
 [data-testid="stSidebar"] { display: none !important; }
 header[data-testid="stHeader"] { display: none !important; }
 #MainMenu { display: none !important; }
+[data-testid="manage-app-button"] { display: none !important; }
+footer { display: none !important; }
 .block-container { max-width: 740px; padding-top: 1.5rem; }
 
 .page-header {
