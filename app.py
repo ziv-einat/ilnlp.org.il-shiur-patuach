@@ -36,7 +36,6 @@ html, body, [class*="css"] { direction: rtl; }
 header[data-testid="stHeader"] { display: none !important; }
 #MainMenu { display: none !important; }
 [data-testid="manage-app-button"] { display: none !important; }
-[data-testid="stBottom"] { display: none !important; }
 [data-testid="stStatusWidget"] { display: none !important; }
 .stDeployButton { display: none !important; }
 footer { display: none !important; }
